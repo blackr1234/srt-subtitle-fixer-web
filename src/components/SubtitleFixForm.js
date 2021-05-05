@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 import axios from "axios";
 import FileSaver from "file-saver";
 import moment from "moment";
@@ -21,6 +22,8 @@ const getSessionKey = (salt) => Base64.stringify(sha256(getFormattedDateTime() +
 
 function SubtitleFixForm() {
 	const [isLoading, setLoading] = useState(false);
+	const [warnMsgs, setWarnMsgs] = useState([]);
+	const [errorMsgs, setErrorMsgs] = useState([]);
 	const [data, setData] = useState({
 		sortByTime: true,
 		correctSeqNums: true,
@@ -34,6 +37,8 @@ function SubtitleFixForm() {
 	const handleOnChange = (k, v) => setData((state) => ({ ...state, [k]: v }));
 
 	const postSubtitleFix = () => {
+		setWarnMsgs([]);
+		setErrorMsgs([]);
 		setLoading(true);
 
 		const formData = new FormData();
@@ -44,16 +49,26 @@ function SubtitleFixForm() {
 
 		formData.append("sessionKey", getSessionKey(data.srtFile.name));
 
-		axios.post(`${backendHost}/subtitle/fix`, formData).then((response) => {
-			if (response && response.data && response.data.srtFileContent) {
-				const blob = new Blob([response.data.srtFileContent], { type: "text/plain;charset=utf-8" });
-				FileSaver.saveAs(blob, "hello world.txt");
+		axios
+			.post(`${backendHost}/subtitle/fix`, formData)
+			.then((res) => {
+				if (res && res.data) {
+					if (res.data.status !== "SUCCESS") {
+						setWarnMsgs(res.data.warnMsgs);
+						setErrorMsgs(res.data.errorMsgs);
+					}
+
+					if (res.data.srtFileContent) {
+						const blob = new Blob([res.data.srtFileContent], { type: "text/plain;charset=utf-8" });
+						FileSaver.saveAs(blob, "hello world.txt");
+					}
+				}
 
 				setLoading(false);
-			} else {
-				setLoading(false);
-			}
-		});
+			})
+			.catch((err) => {
+				setErrorMsgs(["Failed to connect to the back-end server."]);
+			});
 	};
 
 	return (
@@ -184,13 +199,33 @@ function SubtitleFixForm() {
 
 				<hr />
 
-				<Button
-					variant="primary"
-					disabled={!data.srtFile || isLoading}
-					onClick={isLoading ? null : postSubtitleFix}
-				>
-					{isLoading ? "Processing…" : "Submit"}
-				</Button>
+				<Form.Group>
+					<Button
+						variant="primary"
+						disabled={!data.srtFile || isLoading}
+						onClick={isLoading ? null : postSubtitleFix}
+					>
+						{isLoading ? "Processing…" : "Submit"}
+					</Button>
+				</Form.Group>
+
+				{(!warnMsgs || !warnMsgs.length) && (!errorMsgs || !errorMsgs.length) ? (
+					<Form.Group>
+						<Alert variant="success">All good!</Alert>
+					</Form.Group>
+				) : null}
+
+				{warnMsgs && warnMsgs.length ? (
+					<Form.Group>
+						<Alert variant="warning">{warnMsgs}</Alert>
+					</Form.Group>
+				) : null}
+
+				{errorMsgs && errorMsgs.length ? (
+					<Form.Group>
+						<Alert variant="danger">{errorMsgs}</Alert>
+					</Form.Group>
+				) : null}
 			</Form>
 		</Jumbotron>
 	);
