@@ -42,8 +42,6 @@ function SubtitleFixForm() {
 			formData.append(k, data[k]);
 		}
 
-		console.log(getFormattedDateTime());
-		console.log(getSessionKey(data.srtFile.name));
 		formData.append("sessionKey", getSessionKey(data.srtFile.name));
 
 		axios.post(`${backendHost}/subtitle/fix`, formData).then((response) => {
@@ -83,7 +81,7 @@ function SubtitleFixForm() {
 						name="chineseTranslation"
 						id="TC"
 						onChange={(e) => handleOnChange(e.target.name, e.target.id)}
-						defaultChecked
+						checked={data.chineseTranslation === "TC"}
 					/>
 					<Form.Check
 						custom
@@ -93,6 +91,7 @@ function SubtitleFixForm() {
 						name="chineseTranslation"
 						id="SC"
 						onChange={(e) => handleOnChange(e.target.name, e.target.id)}
+						checked={data.chineseTranslation === "SC"}
 					/>
 					<Form.Check
 						custom
@@ -100,7 +99,7 @@ function SubtitleFixForm() {
 						id="sortByTime"
 						label="Sort by time"
 						onChange={(e) => handleOnChange(e.target.id, e.target.checked)}
-						defaultChecked
+						checked={data.sortByTime}
 					/>
 					<Form.Check
 						custom
@@ -108,22 +107,36 @@ function SubtitleFixForm() {
 						id="correctSeqNums"
 						label="Correct sequence numbers"
 						onChange={(e) => handleOnChange(e.target.id, e.target.checked)}
-						defaultChecked
+						checked={data.correctSeqNums}
 					/>
 					<Form.Check
 						custom
 						type="checkbox"
 						id="keepFirstLine"
 						label="Keep only the first subtitle line"
-						onChange={(e) => handleOnChange(e.target.id, e.target.checked)}
+						onChange={(e) => {
+							handleOnChange(e.target.id, e.target.checked);
+
+							if (e.target.checked) {
+								setData((state) => ({ ...state, singleLine: false }));
+							}
+						}}
+						checked={data.keepFirstLine}
 					/>
 					<Form.Check
 						custom
 						type="checkbox"
 						id="singleLine"
 						label="Combine multi-line subtitles into single line"
-						onChange={(e) => handleOnChange(e.target.id, e.target.checked)}
-						defaultChecked
+						onChange={(e) => {
+							if (data.keepFirstLine) {
+								e.preventDefault();
+							} else {
+								handleOnChange(e.target.id, e.target.checked);
+							}
+						}}
+						disabled={data.keepFirstLine}
+						checked={data.singleLine}
 					/>
 				</Form.Group>
 
