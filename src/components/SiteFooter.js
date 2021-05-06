@@ -1,0 +1,32 @@
+import { memo } from "react";
+import preval from "preval.macro";
+import GitInfo from "react-git-info/macro";
+import moment from "moment";
+
+function SiteFooter(props) {
+	const lastUpdatedTime = preval`module.exports = new Date().getTime();`;
+
+	const gitInfo = GitInfo();
+
+	return (
+		<div
+			style={{
+				color: "#607d8b",
+				textAlign: "center",
+			}}
+		>
+			Last Updated On:{" "}
+			<span title={moment(lastUpdatedTime).format("DD MMM YYYY HH:mm:ss")} style={{ cursor: "help" }}>
+				{moment(lastUpdatedTime).format("DD MMM YYYY")}
+			</span>{" "}
+			/{" "}
+			<span title={gitInfo.commit.hash} style={{ cursor: "help" }}>
+				{gitInfo.commit.shortHash}
+			</span>
+		</div>
+	);
+}
+
+const memoComponent = memo(SiteFooter, (prev, next) => true);
+export default memoComponent;
+export { memoComponent as SiteFooter };
