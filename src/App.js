@@ -1,7 +1,7 @@
 import "./App.css";
 import { SubtitleFixForm } from "./components/SubtitleFixForm";
 
-function App() {
+function App(props) {
 	return (
 		<div style={{ padding: "5vw" }}>
 			<SubtitleFixForm />
