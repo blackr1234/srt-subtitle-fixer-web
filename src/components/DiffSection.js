@@ -5,6 +5,8 @@ function DiffSection(props) {
 	const { beforeText, afterText } = props;
 
 	const wikEdDiff = new WikEdDiff();
+	wikEdDiff.config.showBlockMoves = false;
+
 	const diffHtml = wikEdDiff.diff(beforeText, afterText);
 
 	return <div dangerouslySetInnerHTML={{ __html: diffHtml }} />;
