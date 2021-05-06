@@ -35,6 +35,7 @@ function SubtitleFixForm(props) {
 		correctSeqNums: true,
 		keepFirstLine: false,
 		singleLine: true,
+		removeFormatting: true,
 		chineseTranslation: "TC",
 		adjustTime: 0,
 		expandOrShrinkDuration: 0,
@@ -42,12 +43,7 @@ function SubtitleFixForm(props) {
 
 	const handleOnChange = (k, v) => setData((state) => ({ ...state, [k]: v }));
 
-	const postSubtitleFix = () => {
-		setWarnMsgs([]);
-		setErrorMsgs([]);
-		setLoading(true);
-		setAfterText("");
-
+	const constructFormData = () => {
 		const formData = new FormData();
 
 		for (const k in data) {
@@ -56,8 +52,12 @@ function SubtitleFixForm(props) {
 
 		formData.append("sessionKey", getSessionKey(data.srtFile.name));
 
+		return formData;
+	};
+
+	const makeApiCall = () => {
 		axios
-			.post(`${backendHost}/subtitle/fix`, formData)
+			.post(`${backendHost}/subtitle/fix`, constructFormData())
 			.then((res) => {
 				if (res && res.data) {
 					if (res.data.status !== "SUCCESS") {
@@ -83,6 +83,27 @@ function SubtitleFixForm(props) {
 				setRunAtLeastOnce(true);
 				setData((state) => ({ ...state, srtFile: null }));
 			});
+	};
+
+	const postSubtitleFix = () => {
+		setWarnMsgs([]);
+		setErrorMsgs([]);
+		setLoading(true);
+		setAfterText("");
+
+		const reader = new FileReader();
+		reader.onloadend = (e) => {
+			if (e.target.result) {
+				setBeforeText(e.target.result);
+				makeApiCall();
+			} else {
+				setLoading(false);
+				setRunAtLeastOnce(true);
+				setData((state) => ({ ...state, srtFile: null }));
+				setErrorMsgs([`Failed to read SRT file [${data.srtFile.name}].`]);
+			}
+		};
+		reader.readAsText(data.srtFile);
 	};
 
 	return (
@@ -112,12 +133,6 @@ function SubtitleFixForm(props) {
 											handleOnChange(e.target.id, file);
 											setFileName(file.name);
 											setAfterText("");
-
-											const reader = new FileReader();
-											reader.onload = function fileReadCompleted() {
-												setBeforeText(reader.result);
-											};
-											reader.readAsText(file);
 										}}
 									/>
 								</Form.Group>
@@ -193,6 +208,15 @@ function SubtitleFixForm(props) {
 									}}
 									disabled={isLoading || data.keepFirstLine}
 									checked={data.singleLine}
+								/>
+								<Form.Check
+									custom
+									type="checkbox"
+									id="removeFormatting"
+									label="Remove formatting"
+									onChange={(e) => handleOnChange(e.target.id, e.target.checked)}
+									checked={data.removeFormatting}
+									disabled={isLoading}
 								/>
 							</Form.Group>
 
