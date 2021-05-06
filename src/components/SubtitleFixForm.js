@@ -88,6 +88,7 @@ function SubtitleFixForm() {
 						<Form.File
 							custom
 							id="srtFile"
+							accept=".srt"
 							label={(data.srtFile && data.srtFile.name) || "Select SRT file…"}
 							onChange={(e) => {
 								handleOnChange(e.target.id, e.target.files[0]);
