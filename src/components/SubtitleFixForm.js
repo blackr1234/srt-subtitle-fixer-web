@@ -13,6 +13,7 @@ import sha256 from "crypto-js/sha256";
 import Base64 from "crypto-js/enc-base64";
 import { backendHost } from "../backendConfig";
 import { DiffSection } from "./DiffSection";
+import SiteLogo from "../logo.svg";
 
 const isInteger = (e) => {
 	const num = Number(e);
@@ -111,7 +112,27 @@ function SubtitleFixForm(props) {
 			<Container>
 				<Row>
 					<Col>
-						<h2>Welcome to SRT Subtitle Fixer!</h2>
+						<img
+							src={SiteLogo}
+							alt="logo"
+							draggable={false}
+							onContextMenu={(e) => e.preventDefault()}
+							style={{
+								display: "inline-flex",
+								height: "3.5em",
+								verticalAlign: "middle",
+								marginRight: "20px",
+							}}
+						/>
+						<h2
+							style={{
+								display: "inline-flex",
+								margin: "0",
+								verticalAlign: "middle",
+							}}
+						>
+							Welcome to SRT Subtitle Fixer!
+						</h2>
 					</Col>
 				</Row>
 
@@ -272,11 +293,11 @@ function SubtitleFixForm(props) {
 
 							<Form.Group>
 								<Button
-									variant="primary"
+									variant="dark"
 									disabled={isLoading || !data.srtFile}
 									onClick={isLoading ? null : postSubtitleFix}
 								>
-									{isLoading ? "Processing…" : "Submit"}
+									{isLoading ? "Processing…" : "Start"}
 								</Button>
 							</Form.Group>
 

@@ -4,8 +4,8 @@ import GitInfo from "react-git-info/macro";
 import moment from "moment";
 
 function SiteFooter(props) {
+	const currentYear = new Date().getFullYear();
 	const lastUpdatedTime = preval`module.exports = new Date().getTime();`;
-
 	const gitInfo = GitInfo();
 
 	return (
@@ -15,6 +15,7 @@ function SiteFooter(props) {
 				textAlign: "center",
 			}}
 		>
+			<div>Copyright © {currentYear} Chung Cheuk Hang Michael. All rights reserved.</div>
 			Last Updated On:{" "}
 			<span title={moment(lastUpdatedTime).format("DD MMM YYYY HH:mm:ss")} style={{ cursor: "help" }}>
 				{moment(lastUpdatedTime).format("DD MMM YYYY")}
