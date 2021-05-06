@@ -3,8 +3,7 @@ import { SubtitleFixForm } from "./components/SubtitleFixForm";
 
 function App() {
 	return (
-		<div style={{ padding: "50px", backgroundColor: "#cfd8dc" }}>
-			{" "}
+		<div style={{ padding: "5vw" }}>
 			<SubtitleFixForm />
 		</div>
 	);

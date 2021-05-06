@@ -21,9 +21,11 @@ const getFormattedDateTime = () => moment().utc().format("YYYY-MM-DD HH:mm");
 const getSessionKey = (salt) => Base64.stringify(sha256(getFormattedDateTime() + "_" + salt));
 
 function SubtitleFixForm() {
+	const [isRunAtLeastOnce, setRunAtLeastOnce] = useState(false);
 	const [isLoading, setLoading] = useState(false);
 	const [warnMsgs, setWarnMsgs] = useState([]);
 	const [errorMsgs, setErrorMsgs] = useState([]);
+	const [fileName, setFileName] = useState("");
 	const [data, setData] = useState({
 		sortByTime: true,
 		correctSeqNums: true,
@@ -60,14 +62,17 @@ function SubtitleFixForm() {
 
 					if (res.data.srtFileContent) {
 						const blob = new Blob([res.data.srtFileContent], { type: "text/plain;charset=utf-8" });
-						FileSaver.saveAs(blob, "hello world.txt");
+						FileSaver.saveAs(blob, fileName);
 					}
 				}
-
-				setLoading(false);
 			})
 			.catch((err) => {
-				setErrorMsgs(["Failed to connect to the back-end server."]);
+				setErrorMsgs(["Network error."]);
+			})
+			.finally(() => {
+				setLoading(false);
+				setRunAtLeastOnce(true);
+				setData((state) => ({ ...state, srtFile: null }));
 			});
 	};
 
@@ -77,15 +82,20 @@ function SubtitleFixForm() {
 
 			<div style={{ padding: "20px" }} />
 
-			<Form action="/test">
-				<Form.Group>
-					<Form.File
-						custom
-						id="srtFile"
-						label={(data.srtFile && data.srtFile.name) || "Select SRT file…"}
-						onChange={(e) => handleOnChange(e.target.id, e.target.files[0])}
-					/>
-				</Form.Group>
+			<Form>
+				{!isLoading && (
+					<Form.Group>
+						<Form.File
+							custom
+							id="srtFile"
+							label={(data.srtFile && data.srtFile.name) || "Select SRT file…"}
+							onChange={(e) => {
+								handleOnChange(e.target.id, e.target.files[0]);
+								setFileName(e.target.files[0].name);
+							}}
+						/>
+					</Form.Group>
+				)}
 
 				<Form.Group>
 					<Form.Check
@@ -97,6 +107,7 @@ function SubtitleFixForm() {
 						id="TC"
 						onChange={(e) => handleOnChange(e.target.name, e.target.id)}
 						checked={data.chineseTranslation === "TC"}
+						disabled={isLoading}
 					/>
 					<Form.Check
 						custom
@@ -107,6 +118,7 @@ function SubtitleFixForm() {
 						id="SC"
 						onChange={(e) => handleOnChange(e.target.name, e.target.id)}
 						checked={data.chineseTranslation === "SC"}
+						disabled={isLoading}
 					/>
 					<Form.Check
 						custom
@@ -115,6 +127,7 @@ function SubtitleFixForm() {
 						label="Sort by time"
 						onChange={(e) => handleOnChange(e.target.id, e.target.checked)}
 						checked={data.sortByTime}
+						disabled={isLoading}
 					/>
 					<Form.Check
 						custom
@@ -123,6 +136,7 @@ function SubtitleFixForm() {
 						label="Correct sequence numbers"
 						onChange={(e) => handleOnChange(e.target.id, e.target.checked)}
 						checked={data.correctSeqNums}
+						disabled={isLoading}
 					/>
 					<Form.Check
 						custom
@@ -137,6 +151,7 @@ function SubtitleFixForm() {
 							}
 						}}
 						checked={data.keepFirstLine}
+						disabled={isLoading}
 					/>
 					<Form.Check
 						custom
@@ -150,7 +165,7 @@ function SubtitleFixForm() {
 								handleOnChange(e.target.id, e.target.checked);
 							}
 						}}
-						disabled={data.keepFirstLine}
+						disabled={isLoading || data.keepFirstLine}
 						checked={data.singleLine}
 					/>
 				</Form.Group>
@@ -172,6 +187,7 @@ function SubtitleFixForm() {
 									setData((state) => ({ ...state, [e.target.id]: 0 }));
 								}
 							}}
+							disabled={isLoading}
 						/>
 					</Col>
 				</Form.Group>
@@ -193,6 +209,7 @@ function SubtitleFixForm() {
 									setData((state) => ({ ...state, [e.target.id]: 0 }));
 								}
 							}}
+							disabled={isLoading}
 						/>
 					</Col>
 				</Form.Group>
@@ -202,14 +219,17 @@ function SubtitleFixForm() {
 				<Form.Group>
 					<Button
 						variant="primary"
-						disabled={!data.srtFile || isLoading}
+						disabled={isLoading || !data.srtFile}
 						onClick={isLoading ? null : postSubtitleFix}
 					>
 						{isLoading ? "Processing…" : "Submit"}
 					</Button>
 				</Form.Group>
 
-				{(!warnMsgs || !warnMsgs.length) && (!errorMsgs || !errorMsgs.length) ? (
+				{isRunAtLeastOnce &&
+				!isLoading &&
+				(!warnMsgs || !warnMsgs.length) &&
+				(!errorMsgs || !errorMsgs.length) ? (
 					<Form.Group>
 						<Alert variant="success">All good!</Alert>
 					</Form.Group>
