@@ -112,9 +112,10 @@ function SubtitleFixForm(props) {
 				setData((state) => ({ ...state, srtFile: null }));
 				setErrorMsgs([
 					inputFileContent
-						? `The size of the selected SRT file is ${inputFileSize} Bytes which exceeds the limit of 1MB.`
-						: `Failed to read SRT file [${inputFileName}].`,
-					...(e.target.error ? [e.target.error.message] : []),
+						? `The size of the "${inputFileName}" is ${inputFileSize} Bytes which exceeds the limit of 1MB.`
+						: `Failed to read "${inputFileName}". ${
+								e.target.error ? e.target.error.message : "Please make sure your file is not empty."
+						  }`,
 				]);
 			}
 		};
@@ -159,8 +160,8 @@ function SubtitleFixForm(props) {
 								<Form.File
 									custom
 									id="srtFile"
-									accept=".srt"
-									label={(data.srtFile && data.srtFile.name) || "Select SRT file…"}
+									accept=".ass, .srt"
+									label={(data.srtFile && data.srtFile.name) || "Select ASS/SRT file…"}
 									disabled={isLoading}
 									onClick={(e) => {
 										e.target.value = null;
@@ -174,6 +175,10 @@ function SubtitleFixForm(props) {
 									}}
 								/>
 							</Form.Group>
+
+							<p style={{ color: "#78909c" }}>
+								Note: If the file is in ASS format, it will be automatically converted into SRT.
+							</p>
 
 							<Form.Group>
 								<Form.Check
@@ -390,14 +395,7 @@ function SubtitleFixForm(props) {
 
 							{errorMsgs && errorMsgs.length && !data.srtFile ? (
 								<Form.Group>
-									<Alert
-										variant="danger"
-										style={{
-											whiteSpace: "nowrap",
-											overflowX: "auto",
-											overflowY: "auto",
-										}}
-									>
+									<Alert variant="danger">
 										<Alert.Heading as="h6">Errors ({errorMsgs.length})</Alert.Heading>
 										{errorMsgs.map((msg, i) => (
 											<div key={i}>{msg}</div>

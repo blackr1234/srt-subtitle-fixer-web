@@ -25,13 +25,14 @@ body::before {
 	background-size: cover;
 }
 
-img,
+p,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
+img,
 label,
 .site-footer {
 	-webkit-touch-callout: none;
