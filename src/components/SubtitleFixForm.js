@@ -97,15 +97,21 @@ function SubtitleFixForm(props) {
 
 		const reader = new FileReader();
 		reader.onloadend = (e) => {
-			if (e.target.result) {
-				setBeforeText(e.target.result);
+			const inputFileContent = e.target.result;
+			const inputFileName = data.srtFile.name;
+			const inputFileSize = data.srtFile.size;
+
+			if (inputFileContent && inputFileSize <= 1024 * 1024) {
+				setBeforeText(inputFileContent);
 				makeApiCall();
 			} else {
 				setLoading(false);
 				setRunAtLeastOnce(true);
 				setData((state) => ({ ...state, srtFile: null }));
 				setErrorMsgs([
-					`Failed to read SRT file [${data.srtFile.name}].`,
+					inputFileContent
+						? `The size of the selected SRT file is ${inputFileSize} Bytes which exceeds the limit of 1MB.`
+						: `Failed to read SRT file [${inputFileName}].`,
 					...(e.target.error ? [e.target.error.message] : []),
 				]);
 			}
