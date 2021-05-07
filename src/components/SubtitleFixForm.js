@@ -163,9 +163,8 @@ function SubtitleFixForm(props) {
 									accept=".ass, .srt"
 									label={(data.srtFile && data.srtFile.name) || "Select ASS/SRT file…"}
 									disabled={isLoading}
-									onClick={(e) => {
-										e.target.value = null;
-									}}
+									onClick={(e) => (e.target.value = null)}
+									onDragOver={(e) => (e.target.value = null)}
 									onChange={(e) => {
 										const file = e.target.files[0];
 
