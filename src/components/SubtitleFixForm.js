@@ -360,7 +360,8 @@ function SubtitleFixForm(props) {
 													width: "100%",
 													height: "5em",
 													textAlign: "center",
-													background: "linear-gradient(to bottom, transparent 0%, white 90%)",
+													background:
+														"linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 90%)",
 													left: 0,
 													bottom: 0,
 													zIndex: 1,
