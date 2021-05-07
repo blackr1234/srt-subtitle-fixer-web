@@ -1,6 +1,6 @@
-import "./App.css";
 import { SubtitleFixForm } from "./components/SubtitleFixForm";
 import { SiteFooter } from "./components/SiteFooter";
+import "./App.css";
 
 function App(props) {
 	return (

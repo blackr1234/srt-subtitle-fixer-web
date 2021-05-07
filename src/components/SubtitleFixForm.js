@@ -122,7 +122,7 @@ function SubtitleFixForm(props) {
 	};
 
 	return (
-		<Jumbotron>
+		<Jumbotron style={{ boxShadow: "0 0 1em rgba(0, 0, 0, 0.25)" }}>
 			<Container>
 				<Row>
 					<Col>
@@ -349,12 +349,9 @@ function SubtitleFixForm(props) {
 													: !isWarnMsgsExpanded && warnMsgs.length > 5
 													? "10em"
 													: "auto",
-											overflowY:
-												isWarnMsgsExpanded && warnMsgs.length > 11
-													? "scroll"
-													: !isWarnMsgsExpanded && warnMsgs.length > 5
-													? "hidden"
-													: "auto",
+											whiteSpace: "nowrap",
+											overflowX: isWarnMsgsExpanded ? "auto" : "hidden",
+											overflowY: isWarnMsgsExpanded ? "auto" : "hidden",
 										}}
 									>
 										<Alert.Heading as="h6">Warnings ({warnMsgs.length})</Alert.Heading>
@@ -393,7 +390,14 @@ function SubtitleFixForm(props) {
 
 							{errorMsgs && errorMsgs.length && !data.srtFile ? (
 								<Form.Group>
-									<Alert variant="danger">
+									<Alert
+										variant="danger"
+										style={{
+											whiteSpace: "nowrap",
+											overflowX: "auto",
+											overflowY: "auto",
+										}}
+									>
 										<Alert.Heading as="h6">Errors ({errorMsgs.length})</Alert.Heading>
 										{errorMsgs.map((msg, i) => (
 											<div key={i}>{msg}</div>

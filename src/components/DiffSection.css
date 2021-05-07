@@ -1,0 +1,45 @@
+.diff-section {
+	background-color: #fafafa;
+}
+
+pre {
+	padding: 0.5em;
+}
+
+.diff-section ins,
+.diff-section del,
+.diff-section span {
+	line-height: 1.75em;
+	margin-right: 0.15em;
+	padding: 0.1em 0.15em;
+	border-radius: 0.15em;
+}
+
+.diff-section ins {
+	font-weight: bold;
+	background-color: #c5e1a5;
+	text-decoration: none;
+}
+
+.diff-section ins:hover {
+	background-color: #9ccc65;
+}
+
+.diff-section del {
+	font-weight: bold;
+	background-color: #ffcdd2;
+	text-decoration: none;
+}
+
+.diff-section del:hover {
+	background-color: #ef9a9a;
+}
+
+.diff-section span {
+	color: #78909c;
+}
+
+.diff-section span:hover {
+	color: black;
+	background-color: #e5e9eb;
+}
