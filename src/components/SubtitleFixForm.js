@@ -349,7 +349,7 @@ function SubtitleFixForm(props) {
 													: "auto",
 										}}
 									>
-										<Alert.Heading as="h6">Warnings</Alert.Heading>
+										<Alert.Heading as="h6">Warnings ({warnMsgs.length})</Alert.Heading>
 										{warnMsgs.map((msg, i) => (
 											<div key={i}>{msg}</div>
 										))}
@@ -385,7 +385,7 @@ function SubtitleFixForm(props) {
 							{errorMsgs && errorMsgs.length && !data.srtFile ? (
 								<Form.Group>
 									<Alert variant="danger">
-										<Alert.Heading as="h6">Errors</Alert.Heading>
+										<Alert.Heading as="h6">Errors ({errorMsgs.length})</Alert.Heading>
 										{errorMsgs.map((msg, i) => (
 											<div key={i}>{msg}</div>
 										))}
