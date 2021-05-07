@@ -16,6 +16,8 @@ import { backendHost } from "../backendConfig";
 import { DiffSection } from "./DiffSection";
 import SiteLogo from "../logo.svg";
 
+const MAX_FILE_SIZE_BYTE = 1024 * 1024;
+
 const isInteger = (e) => {
 	const num = Number(e);
 	return num === 0 || num > 0 || num < 0;
@@ -101,7 +103,7 @@ function SubtitleFixForm(props) {
 			const inputFileName = data.srtFile.name;
 			const inputFileSize = data.srtFile.size;
 
-			if (inputFileContent && inputFileSize <= 1024 * 1024) {
+			if (inputFileContent && inputFileSize <= MAX_FILE_SIZE_BYTE) {
 				setBeforeText(inputFileContent);
 				makeApiCall();
 			} else {

@@ -46,3 +46,15 @@ label,
 	background: #e91e63 !important;
 	-webkit-text-fill-color: white !important;
 }
+
+.diff-section {
+	background-color: #fafafa;
+}
+
+.diff-section ins {
+	background-color: #aed581;
+}
+
+.diff-section del {
+	background-color: #ffcdd2;
+}

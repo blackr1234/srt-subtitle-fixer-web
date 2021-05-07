@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { WikEdDiff } from "../wikEd-diff";
+import Diff from "text-diff";
 
 const gradientOverlayHtml = `
 <div style="
@@ -22,10 +22,9 @@ function DiffSection(props) {
 	const { beforeText, afterText } = props;
 	const [isSectionExpanded, setSectionExpanded] = useState(false);
 
-	const wikEdDiff = new WikEdDiff();
-	wikEdDiff.config.showBlockMoves = false;
-
-	const diffHtml = wikEdDiff.diff(beforeText, afterText);
+	const diff = new Diff();
+	const textDiff = diff.main(beforeText, afterText);
+	const diffHtml = "<pre>" + diff.prettyHtml(textDiff).replaceAll(/<br\s*\/>/g, "") + "</pre>";
 
 	return (
 		<Container>
@@ -36,17 +35,16 @@ function DiffSection(props) {
 			</Row>
 			<Row>
 				<Col>
-					<div className="allow-select">
-						<div
-							dangerouslySetInnerHTML={{
-								__html: diffHtml + (isSectionExpanded ? "" : gradientOverlayHtml),
-							}}
-							style={{
-								height: isSectionExpanded ? "20em" : "10em",
-								overflowY: isSectionExpanded ? "scroll" : "hidden",
-							}}
-						></div>
-					</div>
+					<div
+						className="diff-section"
+						dangerouslySetInnerHTML={{
+							__html: diffHtml + (isSectionExpanded ? "" : gradientOverlayHtml),
+						}}
+						style={{
+							height: isSectionExpanded ? "20em" : "10em",
+							overflowY: isSectionExpanded ? "scroll" : "hidden",
+						}}
+					></div>
 					{!isSectionExpanded && (
 						<Button
 							variant="light"
