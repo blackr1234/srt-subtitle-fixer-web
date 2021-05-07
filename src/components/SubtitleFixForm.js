@@ -37,10 +37,10 @@ function SubtitleFixForm(props) {
 	const [isWarnMsgsExpanded, setWarnMsgsExpanded] = useState(false);
 	const [data, setData] = useState({
 		sortByTime: true,
+		removeFormatting: true,
 		correctSeqNums: true,
 		keepFirstLine: false,
 		singleLine: true,
-		removeFormatting: true,
 		chineseTranslation: "TC",
 		adjustTime: 0,
 		expandOrShrinkDuration: 0,
@@ -210,6 +210,15 @@ function SubtitleFixForm(props) {
 								<Form.Check
 									custom
 									type="checkbox"
+									id="removeFormatting"
+									label="Remove formatting"
+									onChange={(e) => handleOnChange(e.target.id, e.target.checked)}
+									checked={data.removeFormatting}
+									disabled={isLoading}
+								/>
+								<Form.Check
+									custom
+									type="checkbox"
 									id="correctSeqNums"
 									label="Correct sequence numbers"
 									onChange={(e) => handleOnChange(e.target.id, e.target.checked)}
@@ -245,15 +254,6 @@ function SubtitleFixForm(props) {
 									}}
 									disabled={isLoading || data.keepFirstLine}
 									checked={data.singleLine}
-								/>
-								<Form.Check
-									custom
-									type="checkbox"
-									id="removeFormatting"
-									label="Remove formatting"
-									onChange={(e) => handleOnChange(e.target.id, e.target.checked)}
-									checked={data.removeFormatting}
-									disabled={isLoading}
 								/>
 							</Form.Group>
 
