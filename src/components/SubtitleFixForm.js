@@ -103,7 +103,10 @@ function SubtitleFixForm(props) {
 				setLoading(false);
 				setRunAtLeastOnce(true);
 				setData((state) => ({ ...state, srtFile: null }));
-				setErrorMsgs([`Failed to read SRT file [${data.srtFile.name}].`]);
+				setErrorMsgs([
+					`Failed to read SRT file [${data.srtFile.name}].`,
+					...(e.target.error ? [e.target.error.message] : []),
+				]);
 			}
 		};
 		reader.readAsText(data.srtFile);
@@ -143,23 +146,25 @@ function SubtitleFixForm(props) {
 				<Row>
 					<Col>
 						<Form>
-							{!isLoading && (
-								<Form.Group>
-									<Form.File
-										custom
-										id="srtFile"
-										accept=".srt"
-										label={(data.srtFile && data.srtFile.name) || "Select SRT file…"}
-										onChange={(e) => {
-											const file = e.target.files[0];
+							<Form.Group>
+								<Form.File
+									custom
+									id="srtFile"
+									accept=".srt"
+									label={(data.srtFile && data.srtFile.name) || "Select SRT file…"}
+									disabled={isLoading}
+									onClick={(e) => {
+										e.target.value = null;
+									}}
+									onChange={(e) => {
+										const file = e.target.files[0];
 
-											handleOnChange(e.target.id, file);
-											setFileName(file.name);
-											setAfterText("");
-										}}
-									/>
-								</Form.Group>
-							)}
+										handleOnChange(e.target.id, file);
+										setFileName(file.name);
+										setAfterText("");
+									}}
+								/>
+							</Form.Group>
 
 							<Form.Group>
 								<Form.Check
@@ -370,8 +375,8 @@ function SubtitleFixForm(props) {
 
 							{errorMsgs && errorMsgs.length && !data.srtFile ? (
 								<Form.Group>
-									<Alert.Heading as="h6">Errors</Alert.Heading>
 									<Alert variant="danger">
+										<Alert.Heading as="h6">Errors</Alert.Heading>
 										{errorMsgs.map((msg, i) => (
 											<div key={i}>{msg}</div>
 										))}
