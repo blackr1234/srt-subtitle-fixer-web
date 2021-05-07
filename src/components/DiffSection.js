@@ -13,7 +13,7 @@ const gradientOverlayHtml = `
 	textAlign: center;
 	background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 90%);
 	left: 0;
-	bottom: 0;
+	bottom: -1px;
 	zIndex: 1;
 "></div>
 `;
