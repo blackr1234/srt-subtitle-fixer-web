@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
@@ -306,6 +307,14 @@ function SubtitleFixForm(props) {
 								>
 									{isLoading ? "Processing…" : "Start"}
 								</Button>
+								{isLoading && (
+									<Spinner
+										animation="border"
+										variant="secondary"
+										size="sm"
+										style={{ verticalAlign: "middle", marginLeft: "1em" }}
+									/>
+								)}
 							</Form.Group>
 
 							{isRunAtLeastOnce &&
