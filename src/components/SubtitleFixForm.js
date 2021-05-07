@@ -71,10 +71,11 @@ function SubtitleFixForm(props) {
 					}
 
 					const srtResultContent = res.data.srtFileContent;
+					const newFileName = fileName.replace(/\.(ass|srt)$/, ".srt");
 
 					if (srtResultContent) {
 						const blob = new Blob([srtResultContent], { type: "text/plain;charset=utf-8" });
-						FileSaver.saveAs(blob, fileName);
+						FileSaver.saveAs(blob, newFileName);
 
 						setAfterText(srtResultContent);
 					}
