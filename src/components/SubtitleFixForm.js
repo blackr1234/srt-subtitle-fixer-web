@@ -55,7 +55,7 @@ function SubtitleFixForm(props) {
 			formData.append(k, data[k]);
 		}
 
-		formData.append("sessionKey", getSessionKey(data.srtFile.name));
+		formData.append("sessionKey", getSessionKey(data.subtitleFile.name));
 
 		return formData;
 	};
@@ -87,7 +87,7 @@ function SubtitleFixForm(props) {
 				setLoading(false);
 				setRunAtLeastOnce(true);
 				setWarnMsgsExpanded(false);
-				setData((state) => ({ ...state, srtFile: null }));
+				setData((state) => ({ ...state, subtitleFile: null }));
 			});
 	};
 
@@ -100,8 +100,8 @@ function SubtitleFixForm(props) {
 		const reader = new FileReader();
 		reader.onloadend = (e) => {
 			const inputFileContent = e.target.result;
-			const inputFileName = data.srtFile.name;
-			const inputFileSize = data.srtFile.size;
+			const inputFileName = data.subtitleFile.name;
+			const inputFileSize = data.subtitleFile.size;
 
 			if (inputFileContent && inputFileSize <= MAX_FILE_SIZE_BYTE) {
 				setBeforeText(inputFileContent);
@@ -109,7 +109,7 @@ function SubtitleFixForm(props) {
 			} else {
 				setLoading(false);
 				setRunAtLeastOnce(true);
-				setData((state) => ({ ...state, srtFile: null }));
+				setData((state) => ({ ...state, subtitleFile: null }));
 				setErrorMsgs([
 					inputFileContent
 						? `The size of the "${inputFileName}" is ${inputFileSize} Bytes which exceeds the limit of 1MB.`
@@ -119,7 +119,7 @@ function SubtitleFixForm(props) {
 				]);
 			}
 		};
-		reader.readAsText(data.srtFile);
+		reader.readAsText(data.subtitleFile);
 	};
 
 	return (
@@ -159,9 +159,9 @@ function SubtitleFixForm(props) {
 							<Form.Group>
 								<Form.File
 									custom
-									id="srtFile"
+									id="subtitleFile"
 									accept=".ass, .srt"
-									label={(data.srtFile && data.srtFile.name) || "Select ASS/SRT file…"}
+									label={(data.subtitleFile && data.subtitleFile.name) || "Select ASS/SRT file…"}
 									disabled={isLoading}
 									onClick={(e) => (e.target.value = null)}
 									onDragOver={(e) => (e.target.value = null)}
@@ -314,7 +314,7 @@ function SubtitleFixForm(props) {
 							<Form.Group>
 								<Button
 									variant="dark"
-									disabled={isLoading || !data.srtFile}
+									disabled={isLoading || !data.subtitleFile}
 									onClick={isLoading ? null : postSubtitleFix}
 								>
 									{isLoading ? "Processing…" : "Start"}
@@ -330,7 +330,7 @@ function SubtitleFixForm(props) {
 							</Form.Group>
 
 							{isRunAtLeastOnce &&
-							!data.srtFile &&
+							!data.subtitleFile &&
 							!isLoading &&
 							(!warnMsgs || !warnMsgs.length) &&
 							(!errorMsgs || !errorMsgs.length) ? (
@@ -341,7 +341,7 @@ function SubtitleFixForm(props) {
 								</Form.Group>
 							) : null}
 
-							{warnMsgs && warnMsgs.length && !data.srtFile ? (
+							{warnMsgs && warnMsgs.length && !data.subtitleFile ? (
 								<Form.Group>
 									<Alert
 										variant="warning"
@@ -392,7 +392,7 @@ function SubtitleFixForm(props) {
 								</Form.Group>
 							) : null}
 
-							{errorMsgs && errorMsgs.length && !data.srtFile ? (
+							{errorMsgs && errorMsgs.length && !data.subtitleFile ? (
 								<Form.Group>
 									<Alert variant="danger">
 										<Alert.Heading as="h6">Errors ({errorMsgs.length})</Alert.Heading>
