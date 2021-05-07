@@ -18,8 +18,8 @@ function SiteFooter(props) {
 		>
 			<div>Copyright © {currentYear} Chung Cheuk Hang Michael. All rights reserved.</div>
 			Last Updated On:{" "}
-			<span title={moment(lastUpdatedTime).format("DD MMM YYYY HH:mm:ss")} style={{ cursor: "help" }}>
-				{moment(lastUpdatedTime).format("DD MMM YYYY")}
+			<span title={moment(lastUpdatedTime).format("D MMM YYYY HH:mm:ss")} style={{ cursor: "help" }}>
+				{moment(lastUpdatedTime).format("D MMM YYYY")}
 			</span>{" "}
 			/{" "}
 			<span title={gitInfo.commit.hash} style={{ cursor: "help" }}>
