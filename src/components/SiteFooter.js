@@ -10,6 +10,7 @@ function SiteFooter(props) {
 
 	return (
 		<div
+			className="site-footer"
 			style={{
 				color: "#607d8b",
 				textAlign: "center",

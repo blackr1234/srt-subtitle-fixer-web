@@ -36,7 +36,7 @@ function DiffSection(props) {
 			</Row>
 			<Row>
 				<Col>
-					<div>
+					<div className="allow-select">
 						<div
 							dangerouslySetInnerHTML={{
 								__html: diffHtml + (isSectionExpanded ? "" : gradientOverlayHtml),

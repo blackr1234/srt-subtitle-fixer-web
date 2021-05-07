@@ -12,7 +12,15 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-* {
+img,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+.site-footer {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -25,4 +33,16 @@ code {
 	-moz-user-drag: none;
 	-ms-user-drag: none;
 	user-drag: none;
+}
+
+::selection {
+	color: white !important;
+	background: #e91e63 !important;
+	-webkit-text-fill-color: white !important;
+}
+
+::-moz-selection {
+	color: white !important;
+	background: #e91e63 !important;
+	-webkit-text-fill-color: white !important;
 }
