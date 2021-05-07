@@ -31,6 +31,7 @@ function SubtitleFixForm(props) {
 	const [fileName, setFileName] = useState("");
 	const [beforeText, setBeforeText] = useState("");
 	const [afterText, setAfterText] = useState("");
+	const [isWarnMsgsExpanded, setWarnMsgsExpanded] = useState(false);
 	const [data, setData] = useState({
 		sortByTime: true,
 		correctSeqNums: true,
@@ -82,6 +83,7 @@ function SubtitleFixForm(props) {
 			.finally(() => {
 				setLoading(false);
 				setRunAtLeastOnce(true);
+				setWarnMsgsExpanded(false);
 				setData((state) => ({ ...state, srtFile: null }));
 			});
 	};
@@ -315,12 +317,54 @@ function SubtitleFixForm(props) {
 
 							{warnMsgs && warnMsgs.length && !data.srtFile ? (
 								<Form.Group>
-									<Alert variant="warning">
+									<Alert
+										variant="warning"
+										style={{
+											marginBottom: "0",
+											height:
+												isWarnMsgsExpanded && warnMsgs.length > 11
+													? "20em"
+													: !isWarnMsgsExpanded && warnMsgs.length > 5
+													? "10em"
+													: "auto",
+											overflowY:
+												isWarnMsgsExpanded && warnMsgs.length > 11
+													? "scroll"
+													: !isWarnMsgsExpanded && warnMsgs.length > 5
+													? "hidden"
+													: "auto",
+										}}
+									>
 										<Alert.Heading as="h6">Warnings</Alert.Heading>
 										{warnMsgs.map((msg, i) => (
 											<div key={i}>{msg}</div>
 										))}
+										{!isWarnMsgsExpanded && warnMsgs.length > 5 && (
+											<div
+												style={{
+													position: "absolute",
+													width: "100%",
+													height: "5em",
+													textAlign: "center",
+													background: "linear-gradient(to bottom, transparent 0%, white 90%)",
+													left: 0,
+													bottom: 0,
+													zIndex: 1,
+												}}
+											></div>
+										)}
 									</Alert>
+									{!isWarnMsgsExpanded && warnMsgs.length > 5 && (
+										<Button
+											variant="light"
+											size="sm"
+											block
+											onClick={() => setWarnMsgsExpanded(true)}
+											style={{ color: "#546e7a", fontWeight: "bold" }}
+										>
+											Click to expand
+										</Button>
+									)}
 								</Form.Group>
 							) : null}
 
@@ -339,20 +383,7 @@ function SubtitleFixForm(props) {
 				</Row>
 			</Container>
 
-			{beforeText && afterText && (
-				<Container>
-					<Row>
-						<Col>
-							<h6>Text Diff</h6>
-						</Col>
-					</Row>
-					<Row>
-						<Col>
-							<DiffSection beforeText={beforeText} afterText={afterText} />
-						</Col>
-					</Row>
-				</Container>
-			)}
+			{beforeText && afterText && <DiffSection beforeText={beforeText} afterText={afterText} />}
 		</Jumbotron>
 	);
 }
