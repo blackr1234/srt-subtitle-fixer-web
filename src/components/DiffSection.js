@@ -25,7 +25,23 @@ function DiffSection(props) {
 
 	const diff = new Diff();
 	const textDiff = diff.main(beforeText, afterText);
-	const diffHtml = diff.prettyHtml(textDiff).replaceAll(/<br\s*\/>/g, "");
+	const diffHtml = diff
+		.prettyHtml(textDiff)
+		.replaceAll(/<br\s*\/>/g, "")
+		.replaceAll(/<span>([\d\D]*?)<\/span>/g, (match, group, offset, text) => {
+			const s = group.split("\r");
+			const len = s.length;
+
+			if (len >= 26) {
+				return [
+					`<span>${s.slice(0, 3).join("\r")}`,
+					`【 ~ <em>${len - 6} lines omitted</em> ~ 】`,
+					`${s.slice(-3).join("\r")}</span>`,
+				].join("\r\r");
+			} else {
+				return match;
+			}
+		});
 	const wrappedDiffHtml = `<pre style="white-space: pre-wrap;">${diffHtml}</pre>`;
 
 	return (
