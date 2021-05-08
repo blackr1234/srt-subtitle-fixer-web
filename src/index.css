@@ -51,12 +51,38 @@ label,
 
 ::selection {
 	color: white !important;
-	background: #e91e63 !important;
+	background: #607d8b !important;
 	-webkit-text-fill-color: white !important;
 }
 
 ::-moz-selection {
 	color: white !important;
-	background: #e91e63 !important;
+	background: #607d8b !important;
 	-webkit-text-fill-color: white !important;
+}
+
+.custom-control-input ~ .custom-control-label::before {
+	border-color: #607d8b !important;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+	border-color: #607d8b !important;
+	background-color: #607d8b !important;
+}
+
+.custom-control-input:active ~ .custom-control-label::before {
+	background-color: #b0bec5 !important;
+}
+
+.custom-checkbox .custom-control-input:focus ~ .custom-control-label::before {
+	box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(96, 125, 139, 0.25) !important;
+}
+
+.custom-radio .custom-control-input:focus ~ .custom-control-label::before {
+	box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(96, 125, 139, 0.25) !important;
+}
+
+.form-control:focus {
+	border-color: #607d8b !important;
+	box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(96, 125, 139, 0.25) !important;
 }
