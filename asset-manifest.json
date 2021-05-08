@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/srt-subtitle-fixer-web/static/css/main.d68d5725.chunk.css",
-    "main.js": "/srt-subtitle-fixer-web/static/js/main.50f362da.chunk.js",
-    "main.js.map": "/srt-subtitle-fixer-web/static/js/main.50f362da.chunk.js.map",
+    "main.js": "/srt-subtitle-fixer-web/static/js/main.32ddbad8.chunk.js",
+    "main.js.map": "/srt-subtitle-fixer-web/static/js/main.32ddbad8.chunk.js.map",
     "runtime-main.js": "/srt-subtitle-fixer-web/static/js/runtime-main.977cb704.js",
     "runtime-main.js.map": "/srt-subtitle-fixer-web/static/js/runtime-main.977cb704.js.map",
     "static/css/2.4c97ca4f.chunk.css": "/srt-subtitle-fixer-web/static/css/2.4c97ca4f.chunk.css",
@@ -19,6 +19,6 @@
     "static/css/2.4c97ca4f.chunk.css",
     "static/js/2.d53a1803.chunk.js",
     "static/css/main.d68d5725.chunk.css",
-    "static/js/main.50f362da.chunk.js"
+    "static/js/main.32ddbad8.chunk.js"
   ]
 }
