@@ -1,6 +1,7 @@
 import { SubtitleFixForm } from "./components/SubtitleFixForm";
 import { SiteFooter } from "./components/SiteFooter";
 import "./App.css";
+import "./bootstrap-form.css";
 
 function App(props) {
 	return (
