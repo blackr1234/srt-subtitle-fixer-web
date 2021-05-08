@@ -1,3 +1,7 @@
+.custom-control {
+	margin-bottom: 0.5em;
+}
+
 .custom-control-input ~ .custom-control-label::before {
 	border-color: #607d8b !important;
 }

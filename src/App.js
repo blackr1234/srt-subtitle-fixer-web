@@ -5,7 +5,7 @@ import "./bootstrap-form.css";
 
 function App(props) {
 	return (
-		<div style={{ padding: "5vw" }}>
+		<div style={{ padding: "2.5vw 5vw" }}>
 			<SubtitleFixForm />
 			<SiteFooter />
 		</div>

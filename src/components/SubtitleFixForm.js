@@ -266,11 +266,12 @@ function SubtitleFixForm(props) {
 								<Form.Label column sm={3}>
 									Adjust time (ms):
 								</Form.Label>
-								<Col>
+								<Col sm={3}>
 									<Form.Control
 										type="text"
 										id="adjustTime"
 										value={data.adjustTime}
+										style={{ textAlign: "center" }}
 										onChange={(e) => handleOnChange(e.target.id, e.target.value)}
 										onBlur={(e) => {
 											if (isInteger(e.target.value)) {
@@ -291,11 +292,12 @@ function SubtitleFixForm(props) {
 								<Form.Label column sm={3}>
 									Expand/shrink duration (ms):
 								</Form.Label>
-								<Col>
+								<Col sm={3}>
 									<Form.Control
 										type="text"
 										id="expandOrShrinkDuration"
 										value={data.expandOrShrinkDuration}
+										style={{ textAlign: "center" }}
 										onChange={(e) => handleOnChange(e.target.id, e.target.value)}
 										onBlur={(e) => {
 											if (isInteger(e.target.value)) {
