@@ -257,8 +257,8 @@ function SubtitleFixForm(props) {
 											handleOnChange(e.target.id, e.target.checked);
 										}
 									}}
-									disabled={isLoading || data.keepFirstLine}
 									checked={data.singleLine}
+									disabled={isLoading || data.keepFirstLine}
 								/>
 							</Form.Group>
 
