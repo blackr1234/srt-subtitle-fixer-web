@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/srt-subtitle-fixer-web/static/css/main.03b6825b.chunk.css",
-    "main.js": "/srt-subtitle-fixer-web/static/js/main.cfb030bd.chunk.js",
-    "main.js.map": "/srt-subtitle-fixer-web/static/js/main.cfb030bd.chunk.js.map",
+    "main.css": "/srt-subtitle-fixer-web/static/css/main.d68d5725.chunk.css",
+    "main.js": "/srt-subtitle-fixer-web/static/js/main.50f362da.chunk.js",
+    "main.js.map": "/srt-subtitle-fixer-web/static/js/main.50f362da.chunk.js.map",
     "runtime-main.js": "/srt-subtitle-fixer-web/static/js/runtime-main.977cb704.js",
     "runtime-main.js.map": "/srt-subtitle-fixer-web/static/js/runtime-main.977cb704.js.map",
     "static/css/2.4c97ca4f.chunk.css": "/srt-subtitle-fixer-web/static/css/2.4c97ca4f.chunk.css",
@@ -10,7 +10,7 @@
     "static/js/2.d53a1803.chunk.js.map": "/srt-subtitle-fixer-web/static/js/2.d53a1803.chunk.js.map",
     "index.html": "/srt-subtitle-fixer-web/index.html",
     "static/css/2.4c97ca4f.chunk.css.map": "/srt-subtitle-fixer-web/static/css/2.4c97ca4f.chunk.css.map",
-    "static/css/main.03b6825b.chunk.css.map": "/srt-subtitle-fixer-web/static/css/main.03b6825b.chunk.css.map",
+    "static/css/main.d68d5725.chunk.css.map": "/srt-subtitle-fixer-web/static/css/main.d68d5725.chunk.css.map",
     "static/js/2.d53a1803.chunk.js.LICENSE.txt": "/srt-subtitle-fixer-web/static/js/2.d53a1803.chunk.js.LICENSE.txt",
     "static/media/logo.b78f1401.svg": "/srt-subtitle-fixer-web/static/media/logo.b78f1401.svg"
   },
@@ -18,7 +18,7 @@
     "static/js/runtime-main.977cb704.js",
     "static/css/2.4c97ca4f.chunk.css",
     "static/js/2.d53a1803.chunk.js",
-    "static/css/main.03b6825b.chunk.css",
-    "static/js/main.cfb030bd.chunk.js"
+    "static/css/main.d68d5725.chunk.css",
+    "static/js/main.50f362da.chunk.js"
   ]
 }
