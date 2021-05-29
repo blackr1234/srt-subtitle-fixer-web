@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Diff from "text-diff";
+import DOMPurify from "dompurify";
 import "./DiffSection.css";
 
 const gradientOverlayHtml = `
@@ -56,7 +57,9 @@ function DiffSection(props) {
 					<div
 						className="diff-section"
 						dangerouslySetInnerHTML={{
-							__html: wrappedDiffHtml + (isSectionExpanded ? "" : gradientOverlayHtml),
+							__html: DOMPurify.sanitize(
+								wrappedDiffHtml + (isSectionExpanded ? "" : gradientOverlayHtml)
+							),
 						}}
 						style={{
 							height: isSectionExpanded ? "20em" : "10em",
